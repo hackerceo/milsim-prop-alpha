@@ -1,8 +1,17 @@
 @startuml
 scale 1400 width
-[*] --> GameModeSelect
+[*] --> CheckReset
+CheckReset : Check to see if button is pressed during power-on
+CheckReset : if so then make AP open (with no password)
+CheckReset --> ResetWiFi : button
+ResetWiFi --> [*]
+
+CheckReset --> GameModeSelect : no button
 GameModeSelect : Await game selection and settings via WiFi
-GameModeSelect --> GameModeDomination
+GameModeSelect --> GameModeDomination : game start
 GameModeSelect --> GameModeSabotage
 GameModeSelect --> GameModeHeist
+GameModeDomination --> GameModeSelect
+GameModeSabotage --> GameModeSelect 
+GameModeHeist --> GameModeSelect : game over
 @enduml

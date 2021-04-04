@@ -9,6 +9,6 @@
 
 
 ### State Diagram:
-
+![State Diagram for Game Mode](states_diagram.svg)
 
 
