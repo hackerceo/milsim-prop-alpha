@@ -1,4 +1,6 @@
-const DATADIR = 'data';
+// gzips contents of the ESP-hosted website
+
+const DATADIR = 'src/data/web';
 const TARGET_EXT = [".js",".css", ".html"];
 
 var fs = require('fs');
