@@ -1,0 +1,6 @@
+@123456789_123456789@123456789_123456789@123456789_123456789@123456789_123456789
+  Press any button     to capture for        your team                          
+   Capturing for       >>>> RED <<<<                                            
+   Capturing for       >>>> BLUE <<<<                                           
+>>> RED CONTROL <<<  Keep holding button   to gain points!                      
+>>> BLUE CONTROL <<< Keep holding button   to gain points!                      

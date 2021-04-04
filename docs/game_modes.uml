@@ -1,0 +1,8 @@
+@startuml
+scale 1400 width
+[*] --> GameModeSelect
+GameModeSelect : Await game selection and settings via WiFi
+GameModeSelect --> GameModeDomination
+GameModeSelect --> GameModeSabotage
+GameModeSelect --> GameModeHeist
+@enduml

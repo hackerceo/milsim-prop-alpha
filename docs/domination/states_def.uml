@@ -1,0 +1,50 @@
+@startuml
+scale 1400 width
+[*] --> GameModeSelect
+GameModeSelect : "Domination" game selected via WiFi
+GameModeSelect --> GameModeDomination
+
+state GameModeDomination {
+  [*] --> Idle
+  Idle : Decrement game timer
+  Idle : Await button push
+
+  Idle --> CapturingRed : Red pressed
+  CapturingRed : Button held down while timer counts down 10 seconds
+  CapturingRed : Button released prematurely causes exit to idle
+  CapturingRed : Decrement game timer
+  CapturingRed --> Idle : released
+  CapturingRed --> CapturedRed : capture timer
+  CapturedRed : Increment Red team timer
+  CapturedRed : Decrement game timer
+  CapturedRed --> RecaptureBlue : Blue pressed
+  RecaptureBlue --> CapturedRed : released
+  RecaptureBlue --> CapturedBlue : capture timer
+  RecaptureBlue : Button held down while timer counts down 10 seconds
+  RecaptureBlue : Button released prematurely causes exit to Captured Red
+  RecaptureBlue : Decrement game timer
+
+
+  Idle --> CapturingBlue : Blue pressed
+  CapturingBlue : Button held down while timer counts down 10 seconds
+  CapturingBlue : Button released prematurely causes exit to idle
+  CapturingBlue : Decrement game timer
+  CapturingBlue  --> Idle : released
+  CapturingBlue --> CapturedBlue : capture timer
+  CapturedBlue : Increment Blue team timer
+  CapturedBlue : Decrement game timer
+  CapturedBlue --> RecaptureRed : Red pressed
+  RecaptureRed --> CapturedBlue : released
+  RecaptureRed --> CapturedRed : capture timer
+  RecaptureRed : Button held down while timer counts down 10 seconds
+  RecaptureRed : Button released prematurely causes exit to Captured Blue
+  RecaptureRed : Decrement game timer
+
+  GameOver : The game timer has counted down to zero
+  GameOver : Red timer has reached the set duration
+  GameOver : Blue timer has reached the set duration
+  CapturedBlue --> GameOver : Blue wins
+  CapturedRed --> GameOver : Red wins
+  Idle --> GameOver
+}
+@enduml
