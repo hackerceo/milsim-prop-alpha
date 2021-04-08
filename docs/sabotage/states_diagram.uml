@@ -1,0 +1,39 @@
+@startuml
+scale 1400 width
+[*] --> GameModeSelect
+GameModeSelect : "Sabotage" game selected via WiFi
+GameModeSelect --> GameModeSabotage
+
+state GameModeSabotage {
+  [*] --> Idle
+  Idle : Decrement game timer
+  Idle : Await button push
+
+  Idle --> Arming : Red pressed
+  Arming : Button held down while timer counts down 10 seconds
+  Arming : Button released prematurely causes exit to idle
+  Arming : Decrement game timer
+  Arming --> Idle : released
+  Arming --> Armed : arming timer
+  Armed : reset countdown timer (or not)
+  Armed : Decrement countdown timer
+  Armed : Decrement game timer
+  Armed --> Disarming : Blue pressed
+  Disarming --> Armed : released
+  Disarming --> Disarmed : disarming timer
+  Disarming : Button held down while timer counts down 10 seconds
+  Disarming : Button released prematurely causes exit to Armed
+  Disarming : Decrement game timer
+  Disarmed --> Idle 
+  Disarmed : goto GameOver if not re-armable
+  Disarmed : else goto Idle
+
+
+  GameOver : The game timer has counted down to zero
+  GameOver : The countdown timer has reached zero
+  GameOver : The defending team disarmed device
+  Disarmed --> GameOver : Defenders wins
+  Armed --> GameOver : Attackers wins
+  Idle --> GameOver : Defenders win
+}
+@enduml
