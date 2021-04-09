@@ -1,3 +1,3 @@
 .idea
 
-./src/data/jquery.mobile
+node_modules

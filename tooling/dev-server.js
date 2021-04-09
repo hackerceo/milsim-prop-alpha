@@ -1,5 +1,5 @@
-const DATADIR = 'src/data';
-
+const SCRDIR = '../src/data/';
+const WEBSUBDIR = '/web/';
 
 var http = require('http');
 var fs = require('fs');
