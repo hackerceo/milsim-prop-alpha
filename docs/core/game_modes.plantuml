@@ -1,10 +1,12 @@
 @startuml
 scale 1400 width
-[*] --> CheckReset
+[*] --> CheckReset : Power on
 CheckReset : Check to see if button is pressed during power-on
 CheckReset : if so then make AP open (with no password)
 CheckReset --> ResetWiFi : button
-ResetWiFi --> [*]
+ResetWiFi : Wait for user to connect to wifi and
+ResetWiFi : set a password for the access point
+ResetWiFi --> [*] : Power off
 
 CheckReset --> GameModeSelect : no button
 GameModeSelect : Await game selection and settings via WiFi
