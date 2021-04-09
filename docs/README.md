@@ -1,7 +1,9 @@
-# Prop Startup and Game Mode Selection
+# Prop Components Documentation
 
-### State Diagram
-![Startup diagram](game_modes.svg)
+### Core Functionality
+* [Game Modes](./core/game_modes.md)
+* [Input Switches](./core/inputs.md)
+* [Outputs](./core/outputs.md)
 
 
 ### Game Modes:
