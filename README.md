@@ -9,7 +9,7 @@ This project is an open-source game prop for military simulation games
 such as airsoft, paintball and others.  It is designed to run on the 
 ESP-family of IoT devices created by Espressif Systems.
 It specifically targets the [ESP32](https://www.wikipedia.org/wiki/ESP32)
-and [ESP9266](https://www.wikipedia.org/wiki/ESP8266) modules which can 
+and [ESP8266](https://www.wikipedia.org/wiki/ESP8266) modules which can 
 be bought from a wide range of sources.  These controllers have build in 
 WiFi which enables the prop to be configured and controlled from a smart
 phone using a web browser.
@@ -53,14 +53,14 @@ This command is used to configure which game modes will be built on your
 prop:
 ```
 grunt set-games
-grunt set-gzip --add=game1,game2,game3
-grunt set-gzip --del=game1,game2,game3
-grunt set-gzip --add=game1 --del=game2
+grunt set-games --add=game1,game2,game3
+grunt set-games --del=game1,game2,game3
+grunt set-games --add=game1 --del=game2
 ```
 
 #### `build`
 This command is used to build the deploy directory with Arduino-compatable
-code files as well as a data directory to be writtent to the SPIFF filesystem:
+code files as well as a data directory to be written to the SPIFF filesystem:
 ```
 grunt build
 ```
