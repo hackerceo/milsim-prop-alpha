@@ -7,6 +7,7 @@
 
 
 ### Game Modes:
-* [Domination](./domination/README.md)
-* [Sabotage](./sabotage/README.md)
-* [Heist](./heist/README.md)
+* [Domination](./games/domination/README.md)
+* [Sabotage](./games/sabotage/README.md)
+* [Heist](./games/heist/README.md)
+

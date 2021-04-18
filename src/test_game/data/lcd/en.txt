@@ -1,0 +1,2 @@
+____.____1____.____|----.----2----.----|____.____3____.____|----.----4----.----|
+This is LCD line 1. This is LCD line 2. This is LCD line 3. This is LCD line 4.

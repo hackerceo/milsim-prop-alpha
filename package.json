@@ -39,6 +39,9 @@
     "grunt-contrib-uglify": "~0.5.0"
   },
   "dependencies": {
+    "handlebars": "^4.7.7",
+    "i18next": "^20.2.1",
+    "jquery-i18next": "^1.2.1",
     "jquery-mobile": "*",
     "jsonfile": "^6.1.0"
   }

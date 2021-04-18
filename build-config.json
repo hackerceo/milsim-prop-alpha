@@ -3,7 +3,24 @@
     "gzipWebFiles": false
   },
   "games": [
-    "sabotage",
-    "domination"
+    "sabotage", "domination"
+  ],
+  "languages": [
+    {
+      "code": "en",
+      "name": "English",
+      "active": true,
+      "default": true
+    }, {
+      "code": "fr",
+      "name": "Français",
+      "default": false,
+      "active": false
+    }, {
+      "code": "de",
+      "name": "Deutsche",
+      "default": false,
+      "active": false
+    }
   ]
 }
