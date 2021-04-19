@@ -11,3 +11,10 @@
 * [Sabotage](./games/sabotage/README.md)
 * [Heist](./games/heist/README.md)
 
+### Hardware
+ * [Click here](./hardware/) to explore component spec documents
+ * [LCD (4 lines x 20 char)](https://www.aliexpress.com/item/1704800307.html)
+ * [ADXL345 Accelerometer](https://www.aliexpress.com/item/32843886686.html)
+ * [Halo Buttons](https://www.aliexpress.com/item/4001362443186.html)
+ * [DFPlayer audio component](https://www.dfrobot.com/product-1121.html)
+ * [ESP32 Module](https://www.aliexpress.com/item/32959541446.html) (uses-30pin model)
