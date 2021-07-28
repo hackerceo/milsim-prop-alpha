@@ -101,7 +101,6 @@ module.exports = function(grunt) {
         const DATADIR = './deploy/Arduino/data/web';
         const TARGET_EXT = [".js",".css", ".html"];
 
-
         var taskDone = this.async();
         var fs = require('fs');
         var path = require('path');
@@ -131,8 +130,6 @@ module.exports = function(grunt) {
                 });
             });
         };
-
-
         walk(DATADIR, function(err, results) {
             grunt.log.writeln("Found " + results.length + " files.");
             if (err) throw err;
@@ -197,26 +194,28 @@ module.exports = function(grunt) {
             let defaultLangIdx = 0;
             grunt.log.writeln('[' + game + '] MP3 files...');
             buildOptions.languages.forEach((lang, lang_id) => {
-                if (grunt.file.isDir("src/" + game + "/mp3/" + lang.code + "/")) {
-                    mp3FolderIdx++;
-                    // directory exists, add it
-                    let destDir = "deploy/SDcard/" + String(mp3FolderIdx).padStart(2, '0') + "/";
-                    files.push({
-                        cwd: "src/" + game + "/mp3/" + lang.code + "/",
-                        src: ["*"],
-                        dest: destDir,
-                        expand: true
-                    });
-                    // create a labeling file
-                    grunt.file.write(destDir + "desc.txt", "[" + game + "] -> " + lang.name);
-                    if (defaultLangIdx == 0) {
-                        defaultLangIdx = mp3FolderIdx;
+                if (lang.active) {
+                    if (grunt.file.isDir("src/" + game + "/mp3/" + lang.code + "/")) {
+                        mp3FolderIdx++;
+                        // directory exists, add it
+                        let destDir = "deploy/SDcard/" + String(mp3FolderIdx).padStart(2, '0') + "/";
+                        files.push({
+                            cwd: "src/" + game + "/mp3/" + lang.code + "/",
+                            src: ["*"],
+                            dest: destDir,
+                            expand: true
+                        });
+                        // create a labeling file
+                        grunt.file.write(destDir + "desc.txt", "[" + game + "] -> " + lang.name);
+                        if (defaultLangIdx == 0) {
+                            defaultLangIdx = mp3FolderIdx;
+                        }
+                        // save folder id mapping
+                        mp3Dirs[game_id][lang_id] = mp3FolderIdx;
+                    } else {
+                        // missing translation, use default language
+                        mp3Dirs[game_id][lang_id] = defaultLangIdx;
                     }
-                    // save folder id mapping
-                    mp3Dirs[game_id][lang_id] = mp3FolderIdx;
-                } else {
-                    // missing translation, use default language
-                    mp3Dirs[game_id][lang_id] = defaultLangIdx;
                 }
             });
 
@@ -246,6 +245,7 @@ module.exports = function(grunt) {
                 dest: "deploy/Arduino/data/web/" + game + "/",
                 expand: true
             });
+
         });
 
         grunt.config.set('copy.temp.files', files);
