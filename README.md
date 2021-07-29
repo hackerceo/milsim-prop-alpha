@@ -14,8 +14,14 @@ These controllers have build in WiFi which enables the prop to be configured
 and controlled from a smart phone using a web browser.
 
 
-## Artwork and Audio Files
-The design and layout, the main artwork on the board and the PCB layers and traces, are *NOT* protected Intellectual Property ("IP"), see LICENSE files for appropriate details. Any additional writing or images such as the STEALTH_CORP name, logo or copyright and designer notices, and certifications *ARE* considered protected IP and notice is given that they are protected by all applicable IP laws. All associated audio files are licensed for use in the build and operation of the Milsim-Prop-Alpha1 only.  Additional reuse of the audio clips in in other products or the redistribution of audio clips is prohibited and in violation of our licensing and sub-licensing agreements. Please behave and don't get us sued.
+## Artwork
+The design and layout, the main artwork on the board and the PCB layers and traces, are *NOT* protected Intellectual Property ("IP"), see LICENSE files for appropriate details. Any additional writing or images such as the STEALTH_CORP name, logo or copyright and designer notices, and certifications *ARE* considered protected IP and notice is given that they are protected by all applicable IP laws. 
+
+## Audio Files
+All associated audio files are licensed for use in the building and operation of the Milsim-Prop-Alpha1 product only!  Additional reuse of the audio clips in other products or the redistribution of audio clips is prohibited and in violation of our licensing and sub-licensing agreements. Please behave and don't get us sued. 
+If you provide audio files for this project you may agree to have your audio files used under a more permissive license if you make document the license in the associated LICENSE.md file in the audio's directory.
+
+*TLDR; Audio files are not Open Source compatable.*
 
 
 ## Licence
