@@ -14,6 +14,24 @@ These controllers have build in WiFi which enables the prop to be configured
 and controlled from a smart phone using a web browser.
 
 
+## Artwork and Audio Files
+The design and layout, the main artwork on the board and the PCB layers and traces, are *NOT* protected Intellectual Property ("IP"), see LICENSE files for appropriate details. Any additional writing or images such as the STEALTH_CORP name, logo or copyright and designer notices, and certifications *ARE* considered protected IP and notice is given that they are protected by all applicable IP laws. All associated audio files are licensed for use in the build and operation of the Milsim-Prop-Alpha1 only.  Additional reuse of the audio clips in in other products or the redistribution of audio clips is prohibited and in violation of our licensing and sub-licensing agreements. Please behave and don't get us sued.
+
+
+## Licence
+Designed by Nick Benik for STEALTH_CORP. STEALTH_CORP owns all protected IP. Everything that is not otherwise stated as being protected IP (e.g. firmware, PCB design, documentation) is released under permissive copyleft licenses.
+
+| Sector        | License      | Verison |
+| ------------- | ------------ | -------:|
+| Hardware      | [CERN-OHL-S] |     2.0 |
+| Firmware      | [GNU GPL]    |     3.0 |
+| Documentation | [CC BY-SA]   |     4.0 |
+
+Files of all licenses are required with the distribution of files. All files are available in easy-to-modify formats for remixing. 
+
+
+
+
 ### Setup
 Clone the repo from Github and install the dependencies:
 ```
