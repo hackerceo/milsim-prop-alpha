@@ -19,7 +19,7 @@ The design and layout, the main artwork on the board and the PCB layers and trac
 
 ## Audio Files
 All associated audio files are licensed for use in the building and operation of the Milsim-Prop-Alpha1 product only!  Additional reuse of the audio clips in other products or the redistribution of audio clips is prohibited and in violation of our licensing and sub-licensing agreements. Please behave and don't get us sued. 
-If you provide audio files for this project you may agree to have your audio files used under a more permissive license if you make document the license in the associated LICENSE.md file in the audio's directory.
+If you provide contribute your own audio files for this project you may agree to have your audio files used under a more permissive license if you document your file(s) and license in the associated LICENSE.md file in the audio file's directory.
 
 *TLDR; Audio files are not Open Source compatable.*
 
