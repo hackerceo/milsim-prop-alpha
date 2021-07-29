@@ -9,10 +9,9 @@ This project is an open-source game prop for military simulation games
 such as airsoft, paintball and others.  It is designed to run on the 
 ESP-family of IoT devices created by Espressif Systems.
 It specifically targets the [ESP32](https://www.wikipedia.org/wiki/ESP32)
-and [ESP8266](https://www.wikipedia.org/wiki/ESP8266) modules which can 
-be bought from a wide range of sources.  These controllers have build in 
-WiFi which enables the prop to be configured and controlled from a smart
-phone using a web browser.
+and ESP32S modules which can be bought from a wide range of sources.  
+These controllers have build in WiFi which enables the prop to be configured
+and controlled from a smart phone using a web browser.
 
 
 ### Setup
