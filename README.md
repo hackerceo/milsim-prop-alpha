@@ -14,7 +14,7 @@ These controllers have build in WiFi which enables the prop to be configured
 and controlled from a smart phone using a web browser.
 
 ## Patreon
-If you want to support me in developing this project please join my Patreon at https://www.patreon.com/nbenik. Every little bit helps with the parts, board development, shipping and energy drinks required for development.
+If you want to support me in developing this project please join my Patreon at https://www.patreon.com/nbenik. Every little bit helps with the parts, board development, shipping and energy drinks required to keep pounding through this big project.
 
 
 ## Artwork
