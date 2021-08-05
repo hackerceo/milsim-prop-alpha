@@ -13,6 +13,9 @@ and ESP32S modules which can be bought from a wide range of sources.
 These controllers have build in WiFi which enables the prop to be configured
 and controlled from a smart phone using a web browser.
 
+## Patreon
+If you want to support me in developing this project please join my Patreon at https://www.patreon.com/nbenik. Every little bit helps with the parts, board development, shipping and energy drinks required for development.
+
 
 ## Artwork
 The design and layout, the main artwork on the board and the PCB layers and traces, are *NOT* protected Intellectual Property ("IP"), see LICENSE files for appropriate details. Any additional writing or images such as the STEALTH_CORP name, logo or copyright and designer notices, and certifications *ARE* considered protected IP and notice is given that they are protected by all applicable IP laws. 
