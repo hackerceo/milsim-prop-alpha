@@ -32,6 +32,8 @@ Designed by Nick Benik for STEALTH_CORP. STEALTH_CORP owns all protected IP. Eve
 | Hardware      | [CERN-OHL-S] |     2.0 |
 | Firmware      | [GNU GPL]    |     3.0 |
 | Documentation | [CC BY-SA]   |     4.0 |
+| Game Stories  | [CC BY-SA]   |     4.0 |
+| Audio Content | See LICENSE files in MP3 directories | xxx|
 
 Files of all licenses are required with the distribution of files. All files are available in easy-to-modify formats for remixing. 
 
