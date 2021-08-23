@@ -28,7 +28,7 @@ If you contribute your own audio files for this project you may agree to have yo
 
 
 ## Licence
-Designed by Nick Benik for STEALTH_CORP. STEALTH_CORP owns all protected IP. Everything that is not otherwise stated as being protected IP (e.g. firmware, PCB design, documentation) is released under permissive copyleft licenses.
+Designed by Nick Benik for STEALTH_CORP. STEALTH_CORP owns all protected IP. Everything that is not otherwise stated as being protected IP is released under permissive copyleft licenses.
 
 | Sector        | License      | Verison |
 | ------------- | ------------ | -------:|
@@ -39,8 +39,6 @@ Designed by Nick Benik for STEALTH_CORP. STEALTH_CORP owns all protected IP. Eve
 | Audio Content | See LICENSE files in MP3 directories | xxx|
 
 Files of all licenses are required with the distribution of files. All files are available in easy-to-modify formats for remixing. 
-
-
 
 
 ### Setup
