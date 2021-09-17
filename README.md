@@ -47,6 +47,8 @@ Clone the repo from Github and install the dependencies:
 git clone http://github.com/hackerceo/Milsim-Prop-Alpha1.git
 cd Milsim-Prop-Alpha1
 npm install
+npm install -g grunt-cli
+grunt --help
 ```
 
 
