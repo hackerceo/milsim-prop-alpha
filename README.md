@@ -63,3 +63,45 @@ All associated audio files are licensed for use in the building and operation of
 If you contribute your own audio files for this project you may agree to have your audio files used under a more permissive license if you document your file(s) and chosen license in the associated LICENSE.md file in the audio file's directory.
 
 *TLDR; Audio files are not Open Source compatable.*
+
+
+# Task List
+
+- [x] Hardware design
+- [x] PCB prototype
+- [x] Compile/Build system
+- [x] Internationalization design/build
+- [x] Firmware: main loop
+- [ ] Firmware: wifi configurator
+- [ ] Firmware: game mode selector
+- [ ] Firmware: web server - game template
+- [x] Firmware: Buttons Service
+- [ ] Firmware: LCD Service
+- [x] Firmware: MP3 Service
+- [ ] Design networking protocols
+- [ ] Firmware: Networking Service
+- [ ] Firmware: RFID Service
+- [ ] Firmware: Accelerometer Service
+- [ ] Game Mode: Team Picker & Traitor Picker
+- [x] Game Mode: Domination - Story
+- [x] Game Mode: Domination - Design
+- [ ] Game Mode: Domination - Coding
+- [x] Game Mode: Sabotage - Story
+- [x] Game Mode: Sabotage - Design
+- [ ] Game Mode: Sabotage - Coding
+- [x] Game Mode: Heist - Story
+- [ ] Game Mode: Heist - Design
+- [ ] Game Mode: Heist - Coding
+- [x] Game Mode: Contagion - Story
+- [ ] Game Mode: Contagion - Design
+- [ ] Game Mode: Contagion - Coding
+- [x] Game Mode: Broken Arrow - Story
+- [ ] Game Mode: Broken Arrow - Design
+- [ ] Game Mode: Broken Arrow - Coding
+- [x] Game Mode: Broken Quiver - Story
+- [ ] Game Mode: Broken Quiver - Design
+- [ ] Game Mode: Broken Quiver - Coding
+- [ ] Add-on module: Keypad
+- [ ] Add-on module: Cut wire module
+- [ ] Add-on module: Prop wired communicator
+- [ ] Add-on module: GPS module
