@@ -18,6 +18,7 @@ state GameModeDomination {
   CapturedRed : Increment Red team timer
   CapturedRed : Decrement game timer
   CapturedRed --> RecaptureBlue : Blue pressed
+  CapturedRed --> Idle : Red button released
   RecaptureBlue --> CapturedRed : released
   RecaptureBlue --> CapturedBlue : capture timer
   RecaptureBlue : Button held down while timer counts down 10 seconds
@@ -34,6 +35,7 @@ state GameModeDomination {
   CapturedBlue : Increment Blue team timer
   CapturedBlue : Decrement game timer
   CapturedBlue --> RecaptureRed : Red pressed
+  CapturedBlue --> Idle : Blue button released
   RecaptureRed --> CapturedBlue : released
   RecaptureRed --> CapturedRed : capture timer
   RecaptureRed : Button held down while timer counts down 10 seconds
