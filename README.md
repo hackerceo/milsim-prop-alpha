@@ -85,7 +85,7 @@ If you contribute your own audio files for this project you may agree to have yo
 - [ ] Game Mode: Team Picker & Traitor Picker
 - [x] Game Mode: Domination - Story
 - [x] Game Mode: Domination - Design
-- [ ] Game Mode: Domination - Coding
+- [x] Game Mode: Domination - Coding
 - [x] Game Mode: Sabotage - Story
 - [x] Game Mode: Sabotage - Design
 - [ ] Game Mode: Sabotage - Coding
