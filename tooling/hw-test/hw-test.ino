@@ -1,9 +1,7 @@
-#include <SparkFun_ADXL345.h>
-
-#include <deprecated.h>
-#include <MFRC522.h>
-#include <MFRC522Extended.h>
-#include <require_cpp11.h>
+//#include <deprecated.h>
+//#include <MFRC522.h>
+//#include <MFRC522Extended.h>
+//#include <require_cpp11.h>
 
 #include <AsyncEventSource.h>
 #include <AsyncJson.h>
@@ -20,9 +18,22 @@
 #include <SPIFFS.h>
 #include <Fsm.h>
 
+
 // Hardware Abstraction Layer file
 // this defines all your pins/addresses
 #include "HAL.h"
+
+#include <Adafruit_NeoPixel.h>
+Adafruit_NeoPixel LedStrip(24, PIN_NEOPIXELS, NEO_GRB + NEO_KHZ800);
+
+#include <Wire.h>
+#include <ADXL345.h>
+ADXL345 accelerometer;
+
+
+#include <I2CRC522.h>         //  and replace MFRC522 with I2CRC522 
+I2CRC522 mfrc522(I2C_RFID_RST, I2C_ADDRESS_RFID);  // Create MFRC522 instance
+
 
 #include <esp_now.h>
 #include <esp_wifi.h>
@@ -60,6 +71,7 @@ long unsigned int myTimerStart;
 
 void setup() {
   Serial.begin(115200);
+  delay(500);
   Serial.println("Serial started...");  
 
   Serial.println("=== Setting up Mesh WiFi...");
@@ -90,6 +102,7 @@ void setup() {
     Serial.println(" ms");
     Serial.print("Last Packet Send Status:\t");
     Serial.println(status == ESP_NOW_SEND_SUCCESS ? "Delivery Success" : "Delivery Fail");
+    return;
   });
   TestMessage.pipe_id = 0;
   TestMessage.device_id = 0xffff;
@@ -104,12 +117,30 @@ void setup() {
   }
   delay(1000);
 
+
+// ==== test sending second message
+  if (esp_wifi_start() == ESP_OK) {
+    Serial.println("WIFI Init Success");
+  } else {
+    Serial.println("WIFI Init Failed");
+  }
+  result = esp_now_send(broadcastAddress, (uint8_t *) &TestMessage, (6 + 23));
+  if (result != ESP_OK) {
+    Serial.printf("Failed to send: %s\n", esp_err_to_name(result));
+  }
+  delay(100);
+  esp_wifi_stop();
+  Serial.println("WiFi disconnected...");
+  delay(1000);
+// >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
   Serial.println("=== Setting up MP3 Serial...");
   SERIAL_MP3.begin(9600);          // initializes the Serial connection @ 9600 baud
   mp3Player.begin(SERIAL_MP3);     // Prepares DFPlay for execution  
 
   Serial.println("=== Setting up LCD...");
   lcd.init();                   // initialize the lcd 
+
   // Print base message to the LCD
   lcd.backlight();
   lcd.setCursor(2,0);
@@ -123,6 +154,38 @@ void setup() {
   tmr_Blue.showString("BLUE"); 
   tmr_Red.showString("RED");
   delay(1000);
+
+  Serial.println("=== Init Neopixels...");
+  lcd.setCursor(0,2);
+  lcd.print("   ...LED Bars...   ");
+  LedStrip.begin();
+  LedStrip.show();
+  for(int i=0; i<LedStrip.numPixels(); i++) {
+    LedStrip.setPixelColor(i, LedStrip.Color(255, 0, 0));
+  }
+  LedStrip.show();
+  delay(1000);
+  for(int i=0; i<LedStrip.numPixels(); i++) {
+    LedStrip.setPixelColor(i, LedStrip.Color(0, 255, 0));
+  }
+  LedStrip.show();
+  delay(1000);
+  for(int i=0; i<LedStrip.numPixels(); i++) {
+    LedStrip.setPixelColor(i, LedStrip.Color(0, 0, 255));
+  }
+  LedStrip.show();
+  delay(1000);
+  for(int i=0; i<8; i++) {
+    LedStrip.setPixelColor(i, LedStrip.Color(16, 0, 0));
+  }
+  for(int i=8; i<16; i++) {
+    LedStrip.setPixelColor(i, LedStrip.Color(0, 0, 0));
+  }
+  for(int i=16; i<24; i++) {
+    LedStrip.setPixelColor(i, LedStrip.Color(0, 0, 16));
+  }
+  LedStrip.show();
+
 
   Serial.println("=== Setting up Buttons...");
   // ------------------------------------------------- //
@@ -167,6 +230,35 @@ void setup() {
   #endif
 
 
+  // === Test Battery ===
+  Serial.println("=== Battery...");
+  lcd.setCursor(0,2);
+  lcd.print("   ...Battery...    ");
+  #ifdef BATTERY_DISABLES_WIFI
+    esp_wifi_stop();
+    Serial.println("WiFi disconnected...");
+  #endif
+  int batteryLevel = 0;  
+  lcd.setCursor(0,3);
+  lcd.print("Level:              ");
+  for (byte i=0; i<10; i++) {
+    batteryLevel = analogRead(PIN_BATTERY);
+    Serial.print("Battery Level: ");
+    Serial.println(batteryLevel);
+    lcd.setCursor(7,3);
+    lcd.print(batteryLevel);
+    delay(250);
+  }
+  #ifdef BATTERY_DISABLES_WIFI
+    if (esp_wifi_start() == ESP_OK) {
+      Serial.println("WIFI restarted");
+    } else {
+      Serial.println("WIFI restart failed");
+    }
+  #endif
+  delay(2000);
+
+
 
   /// === Test Buttons ===
   lcd.setCursor(0,2);
@@ -193,6 +285,7 @@ void setup() {
   lcd.setCursor(0,3);
   lcd.print(" Blue Btn Pressed!  ");
   delay(3000);  
+
 
 
   /// === Test Keys ===
@@ -243,6 +336,8 @@ void setup() {
   tmr_Blue.showString("BLUE");                
   tmr_Red.showString("RED");                
   Serial.println("...DONE!");
+
+
   
   // === Test MP3 ===
   Serial.print("=== Playing MP3 (3 secs @ full volume)...");
@@ -250,7 +345,7 @@ void setup() {
   lcd.print("     ...MP3...      ");  
   lcd.setCursor(0,3);
   lcd.print(" Playing 3 seconds! ");
-  mp3Player.setVolume(0);      // Sets default volume level to 0 (valid range = 0 to 30)
+  mp3Player.setVolume(29);      // Sets default volume level to 0 (valid range = 0 to 30)
   Selection SDcard = {2,1,0,30,0}; // play all mp3s on SD card at full volume
   mp3Player.play(SDcard);
   myTime = millis() + 3000;
@@ -266,22 +361,124 @@ void setup() {
   delay(40);
   Serial.println("DONE!");
 
+
   // === Test RFID ===
   Serial.println("=== RFID...");
   lcd.setCursor(0,2);
   lcd.print("     ...RFID...     ");
   lcd.setCursor(0,3);
-  lcd.print("       [TODO]       ");
-  delay(1000);
+  lcd.print("Scan card or dongle ");
+  Serial.println("Scan card or dongle...");
+  mfrc522.PCD_Init();   // Init MFRC522
+  bool done = false;
+  bool rfidBlink = false;
+  myTimerStart = millis();
+  while(!done) {
+    while(!mfrc522.PICC_IsNewCardPresent()) { 
+      if ((millis() - myTimerStart) > 500) {
+        if (rfidBlink) {
+          rfidBlink = false;
+          for(int i=8; i<16; i++) {
+            LedStrip.setPixelColor(i, LedStrip.Color(16, 16, 16));
+          }
+        } else {
+          rfidBlink = true;
+          for(int i=8; i<16; i++) {
+            LedStrip.setPixelColor(i, LedStrip.Color(0, 0, 0));
+          }
+        }
+        LedStrip.show();
+        myTimerStart = millis();
+      }
+    }
+    if (mfrc522.PICC_ReadCardSerial()) {
+      for(int i=8; i<16; i++) {
+        LedStrip.setPixelColor(i, LedStrip.Color(0, 64, 0));
+      }
+      LedStrip.show();
+      Serial.print("Card UID: ");
+      lcd.setCursor(0,3);
+      lcd.print("Card ID=            ");
+      lcd.setCursor(8,3);
+      for (byte i=0; i < mfrc522.uid.size; i++) {
+        if (i>0) {
+          Serial.print(":");
+          lcd.print(":");
+        }
+        if (mfrc522.uid.uidByte[i] < 16) {
+          Serial.print("0");
+          lcd.print("0");
+        }
+        Serial.print(mfrc522.uid.uidByte[i], HEX);
+        lcd.print(mfrc522.uid.uidByte[i], HEX);
+      }
+      Serial.println("...Done!");
+      delay(2000);
+      for(int i=8; i<16; i++) {
+        LedStrip.setPixelColor(i, LedStrip.Color(0, 0, 0));
+      }
+      LedStrip.show();
+      done = true;
+    }
+  }
+  delay(6000);
 
 
   // === Test accelerameter ===
   Serial.println("=== Accelerometer...");
   lcd.setCursor(0,2);
   lcd.print("   ...ADXL345...    ");
-  lcd.setCursor(0,3);
-  lcd.print("       [TODO]       ");
+  Serial.println("Initialize ADXL345");
+  if (!accelerometer.begin()) {
+    lcd.setCursor(0,3);
+    lcd.print("      [ERROR]       ");
+  } else {
+    accelerometer.setTapDetectionX(1);       // Check tap on X-Axis
+    accelerometer.setTapDetectionY(1);       // Check tap on Y-Axis
+    accelerometer.setTapDetectionZ(1);       // Check tap on Z-Axis
+    accelerometer.setTapThreshold(2.5);      // Recommended 2.5 g
+    accelerometer.setTapDuration(0.02);      // Recommended 0.02 s
+    accelerometer.setDoubleTapLatency(0.10); // Recommended 0.10 s
+    accelerometer.setDoubleTapWindow(0.30);  // Recommended 0.30 s
+    accelerometer.useInterrupt(ADXL345_INT1);
+    lcd.setCursor(0,3);
+    lcd.print("Do single tap...    ");
+    bool done = false;
+    static Activites lastActiv;
+    lastActiv = accelerometer.readActivites();
+    while (!done) {
+      // Read values for activities
+      delay(50);
+      Activites activ = accelerometer.readActivites();
+      if (activ.isTap & !lastActiv.isTap) {
+        Serial.println("Tap Detected!");
+        lcd.setCursor(0,3);
+        lcd.print("Single Tap Detected!");
+        done = true;
+      }
+      lastActiv = activ;
+    }
+    delay(2000);
+    done = false;
+    lcd.setCursor(0,3);
+    lcd.print("Do double tap...    ");
+    while (!done) {
+      // Read values for activities
+      delay(50);
+      Activites activ = accelerometer.readActivites();
+      if (activ.isDoubleTap & !lastActiv.isDoubleTap) {
+        Serial.println("Double Tap Detected!");
+        lcd.setCursor(0,3);
+        lcd.print("Double Tap Detected!");
+        done = true;
+      }
+      lastActiv = activ;
+    }
+    delay(1000);
+  }
   delay(1000);
+
+
 
   // === DONE ===
   lcd.setCursor(0,2);
@@ -289,8 +486,6 @@ void setup() {
   lcd.setCursor(0,3);
   lcd.print("       [DONE]       ");
   delay(1000);
-
-
 }
 
 
