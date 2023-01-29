@@ -1,6 +1,6 @@
 # Milsim-Prop-Alpha1
 ![License](https://img.shields.io/github/license/hackerceo/milsim-prop-alpha) 
-![Maintenance](https://img.shields.io/maintenance/yes/2021) 
+![Maintenance](https://img.shields.io/maintenance/yes/2023) 
 ![GitHub last commit](https://img.shields.io/github/last-commit/hackerceo/milsim-prop-alpha) 
 ![Lines of code](https://img.shields.io/tokei/lines/github/hackerceo/milsim-prop-alpha) 
 ![GitHub contributors](https://img.shields.io/github/contributors-anon/hackerceo/milsim-prop-alpha) 
@@ -22,7 +22,7 @@ If you want to support me in developing this project please join my Patreon at h
   + Components
     - [LCD (4 lines x 20 char)](https://www.aliexpress.com/item/1704800307.html)
     - [ADXL345 Accelerometer](https://www.aliexpress.com/item/32843886686.html)
-    - [RC522 RFID Card Reader](https://www.aliexpress.com/item/32803014822.html)
+    - [RC522 RFID Card Reader](https://www.aliexpress.us/item/3256802845719808.html)
     - [Halo Buttons](https://www.aliexpress.com/item/4001362443186.html)
     - [Electric Key Switches](https://www.aliexpress.com/item/4000851248444.html)
     - [DFPlayer audio component](https://www.dfrobot.com/product-1121.html)
@@ -39,6 +39,7 @@ If you want to support me in developing this project please join my Patreon at h
   + [Contagion](docs/games/contagion/README.md)
   + [Broken Arrow](docs/games/brokenarrow/README.md)
   + [Broken Quiver](docs/games/brokenquiver/README.md)
+  + [BioWeapon](docs/games/bioweapon/README.md)
 
 
 # Licenses
@@ -56,7 +57,7 @@ Designed by Nick Benik for STEALTH_CORP. STEALTH_CORP owns all protected IP. Eve
 Files of all licenses are required with the distribution of files. All files are available in easy-to-modify formats for remixing. 
 
 ### Artwork
-The design and layout, the main artwork on the board and the PCB layers and traces, are *NOT* protected Intellectual Property ("IP"), see LICENSE files for appropriate details. Any additional writing or images such as the STEALTH_CORP name, logo or copyright and designer notices, and certifications *ARE* considered protected IP and notice is given that they are protected by all applicable IP laws. 
+The design and layout, the main artwork on the board and the PCB layers and traces, are *NOT* protected Intellectual Property ("IP"), see LICENSE files for appropriate details. Any additional writing or images such as the Brooklyn Tactical name, logo or copyright and designer notices, and certifications *ARE* considered protected IP and notice is given that they are protected by all applicable IP laws. 
 
 ### Audio Files
 All associated audio files are licensed for use in the building and operation of the Milsim-Prop-Alpha1 product only!  Additional reuse of the audio clips in other products or the redistribution of audio clips is prohibited and in violation of our licensing and sub-licensing agreements. Please behave and don't get us sued. 
@@ -69,6 +70,9 @@ If you contribute your own audio files for this project you may agree to have yo
 
 - [x] Hardware design
 - [x] PCB prototype
+- [x] Commercial Product: 3D prints design
+- [x] Commercial Product: prototype
+- [ ] Commercial Product: field testing
 - [x] Compile/Build system
 - [x] Internationalization design/build
 - [x] Firmware: main loop
@@ -76,31 +80,45 @@ If you contribute your own audio files for this project you may agree to have yo
 - [ ] Firmware: game mode selector
 - [ ] Firmware: web server - game template
 - [x] Firmware: Buttons Service
-- [ ] Firmware: LCD Service
+- [x] Firmware: LCD Service
 - [x] Firmware: MP3 Service
 - [ ] Design networking protocols
 - [ ] Firmware: Networking Service
-- [ ] Firmware: RFID Service
-- [ ] Firmware: Accelerometer Service
+- [x] Firmware: RFID Service
+- [x] Firmware: Accelerometer Service
+
 - [ ] Game Mode: Team Picker & Traitor Picker
+
 - [x] Game Mode: Domination - Story
 - [x] Game Mode: Domination - Design
 - [x] Game Mode: Domination - Coding
+
 - [x] Game Mode: Sabotage - Story
 - [x] Game Mode: Sabotage - Design
 - [ ] Game Mode: Sabotage - Coding
+
 - [x] Game Mode: Heist - Story
 - [ ] Game Mode: Heist - Design
 - [ ] Game Mode: Heist - Coding
+
 - [x] Game Mode: Contagion - Story
 - [ ] Game Mode: Contagion - Design
 - [ ] Game Mode: Contagion - Coding
+
 - [x] Game Mode: Broken Arrow - Story
 - [ ] Game Mode: Broken Arrow - Design
 - [ ] Game Mode: Broken Arrow - Coding
+
 - [x] Game Mode: Broken Quiver - Story
 - [ ] Game Mode: Broken Quiver - Design
 - [ ] Game Mode: Broken Quiver - Coding
+
+- [x] Game Mode: Bio Weapon - Story
+- [ ] Game Mode: Bio Weapon - Design
+- [ ] Game Mode: Bio Weapon - Coding
+- [ ] Add-on prop: Bio Weapon - Bio Container
+- [ ] Add-on prop: Bio Weapon - Bio Freezer
+
 - [ ] Add-on module: Keypad
 - [ ] Add-on module: Cut wire module
 - [ ] Add-on module: Prop wired communicator
