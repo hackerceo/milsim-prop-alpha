@@ -1,7 +1,8 @@
 # Milsim-Prop-Alpha1
 ![License](https://img.shields.io/github/license/hackerceo/milsim-prop-alpha) 
 ![Maintenance](https://img.shields.io/maintenance/yes/2023) 
-![GitHub last commit](https://img.shields.io/github/last-commit/hackerceo/milsim-prop-alpha) 
+![GitHub last commit](https://img.shields.io/github/last-commit/hackerceo/milsim-prop-alpha)
+![GitHub package.json version](https://img.shields.io/github/package-json/v/hackerceo/milsim-prop-alpha1)
 ![Lines of code](https://img.shields.io/tokei/lines/github/hackerceo/milsim-prop-alpha) 
 ![GitHub contributors](https://img.shields.io/github/contributors-anon/hackerceo/milsim-prop-alpha) 
 
