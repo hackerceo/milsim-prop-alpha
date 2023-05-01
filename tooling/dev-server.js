@@ -1,5 +1,5 @@
-const SCRDIR = '../src/data/';
-const WEBSUBDIR = '/web/';
+const SRCDIR = 'src';
+const WEBSUBDIR = 'web';
 
 var http = require('http');
 var fs = require('fs');
@@ -15,17 +15,29 @@ console.log("PROXY http://127.0.0.1:8125/" + confProxyPath + "/* => http://" + c
 
 http.createServer(function (request, response) {
     console.log(request.url);
+	
 	var tempPath = request.url.split('/');
 	if (tempPath[tempPath.length-1] === '') {
 		tempPath[tempPath.length-1] = 'index.html';
 	}
+	
+	if (tempPath.length < 3) {
+			response.writeHead(301, { Location: "http://127.0.0.1:8125/core/" });
+			response.end();
+			return true;
+	}	
+	tempPath.splice(2, 0, WEBSUBDIR);
+	
 	var requestUrl = tempPath.join('/');
 	
 	if (requestUrl.indexOf("/" + confProxyPath + "/") === 0) {
 		console.log("handle proxy request");
 		response.end("PROXIED TEXT GOES HERE!", 'utf-8');
 	} else {
-		var filePath = './' + DATADIR + requestUrl;
+		
+		var filePath = './' + SRCDIR + requestUrl;
+
+		console.dir(filePath);
 
 		var extname = path.extname(filePath);
 		var contentType = 'text/html';
@@ -56,8 +68,8 @@ http.createServer(function (request, response) {
 		fs.readFile(filePath, function(error, content) {
 			if (error) {
 				if(error.code == 'ENOENT'){
-					fs.readFile('./' + DATADIR + '/404.html', function(error, content) {
-						response.writeHead(200, { 'Content-Type': contentType });
+					fs.readFile('./' + SRCDIR + '/404.html', function(error, content) {
+						response.writeHead(404, { 'Content-Type': contentType });
 						response.end(content, 'utf-8');
 					});
 				}

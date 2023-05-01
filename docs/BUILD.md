@@ -13,7 +13,7 @@ build the project and/or upload changed web assets to the ESP
 microcontroller.
 To start the controller run:
 ```
-npm run-proxy [your-device-ip]
+npm run proxy api [your-device-ip]
 ```
 
 
