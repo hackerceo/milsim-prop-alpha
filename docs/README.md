@@ -14,6 +14,7 @@
 ### Hardware
  * [Schematic Diagram](./hardware/Schematic.svg)
  * [Click here](./hardware/) to explore component spec documents
+ * [Serial Communications Standard](./hardware/COMMS.md)
  * [LCD (4 lines x 20 char)](https://www.aliexpress.com/item/1704800307.html)
  * [ADXL345 Accelerometer](https://www.aliexpress.com/item/32843886686.html)
  * [RC522 RF Card Reader](https://www.aliexpress.com/item/32803014822.html)

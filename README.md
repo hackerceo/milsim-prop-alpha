@@ -20,6 +20,7 @@ If you want to support me in developing this project please join my Patreon at h
 * [Setup](docs/BUILD.md)
 * Hardware
   + [Schematic Diagrams](docs/hardware/Schematic.svg)
+  + [Serial Communications Standard](./docs/hardware/COMMS.md)
   + Components
     - [LCD (4 lines x 20 char)](https://www.aliexpress.com/item/1704800307.html)
     - [ADXL345 Accelerometer](https://www.aliexpress.com/item/32843886686.html)
