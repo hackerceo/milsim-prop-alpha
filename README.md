@@ -123,5 +123,5 @@ If you contribute your own audio files for this project you may agree to have yo
 
 - [ ] Add-on module: Keypad
 - [ ] Add-on module: Cut wire module
-- [ ] Add-on module: Prop wired communicator
+- [x] Add-on module: Prop wired communicator
 - [ ] Add-on module: GPS module
