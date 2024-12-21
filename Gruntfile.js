@@ -3,12 +3,21 @@ module.exports = function(grunt) {
     // Project configuration.
     grunt.initConfig({
         pkg: grunt.file.readJSON('package.json'),
+        availabletasks: {
+            tasks: {}
+        },
         copy: {
             temp: {
                 files: []
             }
         }
     });
+    grunt.registerTask('default', ['availabletasks']);
+
+    // Load the plugins
+    // ===============================================================================================================//
+    grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-available-tasks');
 
 
     // ===============================================================================================================//
@@ -88,7 +97,6 @@ module.exports = function(grunt) {
     });
 
 
-
     // ===============================================================================================================//
     grunt.registerTask('clean', "Cleans out the distribution's deploy directory", function() {
         grunt.file.delete("deploy");
@@ -98,20 +106,19 @@ module.exports = function(grunt) {
 
     // ===============================================================================================================//
     grunt.registerTask('gzip-dist', 'Gzips .js, .css, .html files in the deploy/data/web directory.', function() {
-        const DATADIR = './deploy/Arduino/data/web';
+        const DATADIR = './deploy/MilsimProp/data/web';
         const TARGET_EXT = [".js",".css", ".html"];
 
+        let taskDone = this.async();
+        let fs = require('fs');
+        let path = require('path');
+        let zlib = require('zlib');
 
-        var taskDone = this.async();
-        var fs = require('fs');
-        var path = require('path');
-        var zlib = require('zlib');
-
-        var walk = function(dir, done) {
-            var results = [];
+        let walk = function(dir, done) {
+            let results = [];
             fs.readdir(dir, function(err, list) {
                 if (err) return done(err);
-                var pending = list.length;
+                let pending = list.length;
                 if (!pending) return done(null, results);
                 list.forEach(function(file) {
                     file = path.resolve(dir, file);
@@ -131,8 +138,6 @@ module.exports = function(grunt) {
                 });
             });
         };
-
-
         walk(DATADIR, function(err, results) {
             grunt.log.writeln("Found " + results.length + " files.");
             if (err) throw err;
@@ -156,7 +161,7 @@ module.exports = function(grunt) {
 
 
     // ===============================================================================================================//
-    grunt.registerTask('build', 'Builds the distribution into the deploy directory', function() {
+    grunt.registerTask('build', 'Builds the distribution into the deploy directory', async function() {
         const configFile = 'build-config.json';
         const jsonfile = require('jsonfile');
         const path = require('path');
@@ -167,20 +172,33 @@ module.exports = function(grunt) {
         let mp3Dirs = [];
         let mp3FolderIdx = 0;
 
+        // show the build options
+        console.dir(buildOptions);
+
+        // copy the HAL definition file to deploy directory
+        grunt.log.writeln('Copy Hardware Abstraction Layer (HAL) definition file...');
+        files.push({
+            cwd: "tooling/hw-test/",
+            src: ["HAL.h"],
+            dest: "deploy/MilsimProp/",
+            expand: true
+        });
+
         // make sure that the default language is on top of the languages array
         let defaultLang = buildOptions.languages.splice(buildOptions.languages.find((lang) => { return lang.default; }),1)[0];
         buildOptions.languages.unshift(defaultLang);
         // build the C defines for language constants
         let code_LANGUAGES_DEFINES = "// ==== languages ==== /\n";
-        buildOptions.languages.forEach((lang, lang_id)=> {
+        let code_LANGUAGES_CODES = [];
+        buildOptions.languages.filter((rec) => rec.active).forEach((lang, lang_id)=> {
             code_LANGUAGES_DEFINES = code_LANGUAGES_DEFINES + "#define LANGUAGE_" + lang.code + "\t" + lang_id + ";\n";
+            code_LANGUAGES_CODES[lang_id] = lang.code;
         });
+        code_LANGUAGES_CODES = "int global_LANG_CODES[" + code_LANGUAGES_CODES.length + "][2] = " +
+            String(JSON.stringify(code_LANGUAGES_CODES, null, 4)).replace(/\[/g, "{").replace(/\]/g, "}") + ";";
+
         // build the C defines for game mode constants
         let code_GAME_MODES = "// ==== game modes ==== /\n";
-
-
-
-        console.dir(buildOptions);
 
         // for this part handle the core as a game
         buildOptions.games.unshift('core');
@@ -197,26 +215,28 @@ module.exports = function(grunt) {
             let defaultLangIdx = 0;
             grunt.log.writeln('[' + game + '] MP3 files...');
             buildOptions.languages.forEach((lang, lang_id) => {
-                if (grunt.file.isDir("src/" + game + "/mp3/" + lang.code + "/")) {
-                    mp3FolderIdx++;
-                    // directory exists, add it
-                    let destDir = "deploy/SDcard/" + String(mp3FolderIdx).padStart(2, '0') + "/";
-                    files.push({
-                        cwd: "src/" + game + "/mp3/" + lang.code + "/",
-                        src: ["*"],
-                        dest: destDir,
-                        expand: true
-                    });
-                    // create a labeling file
-                    grunt.file.write(destDir + "desc.txt", "[" + game + "] -> " + lang.name);
-                    if (defaultLangIdx == 0) {
-                        defaultLangIdx = mp3FolderIdx;
+                if (lang.active) {
+                    if (grunt.file.isDir("src/" + game + "/mp3/" + lang.code + "/")) {
+                        mp3FolderIdx++;
+                        // directory exists, add it
+                        let destDir = "deploy/SDcard/" + String(mp3FolderIdx).padStart(2, '0') + "/";
+                        files.push({
+                            cwd: "src/" + game + "/mp3/" + lang.code + "/",
+                            src: ["*.mp3"],
+                            dest: destDir,
+                            expand: true
+                        });
+                        // create a labeling file
+                        grunt.file.write(destDir + "desc.txt", "[" + game + "] -> " + lang.name);
+                        if (defaultLangIdx === 0) {
+                            defaultLangIdx = mp3FolderIdx;
+                        }
+                        // save folder id mapping
+                        mp3Dirs[game_id][lang_id] = mp3FolderIdx;
+                    } else {
+                        // missing translation, use default language
+                        mp3Dirs[game_id][lang_id] = defaultLangIdx;
                     }
-                    // save folder id mapping
-                    mp3Dirs[game_id][lang_id] = mp3FolderIdx;
-                } else {
-                    // missing translation, use default language
-                    mp3Dirs[game_id][lang_id] = defaultLangIdx;
                 }
             });
 
@@ -224,7 +244,7 @@ module.exports = function(grunt) {
             grunt.log.writeln('[' + game + '] MCU files...');
             files.push({
                 src: ["src/" + game + "/mcu/**/*"],
-                dest: "deploy/Arduino/",
+                dest: "deploy/MilsimProp/",
                 expand: true,
                 flatten: true
             });
@@ -234,7 +254,7 @@ module.exports = function(grunt) {
             files.push({
                 cwd: "src/" + game + "/data/",
                 src: ["**/*"],
-                dest: "deploy/Arduino/data/data/" + game + "/",
+                dest: "deploy/MilsimProp/data/data/" + game + "/",
                 expand: true
             });
 
@@ -243,27 +263,78 @@ module.exports = function(grunt) {
             files.push({
                 cwd: "src/" + game + "/web/",
                 src: ["**/*"],
-                dest: "deploy/Arduino/data/web/" + game + "/",
+                dest: "deploy/MilsimProp/data/web/" + game + "/",
                 expand: true
             });
+
         });
 
         grunt.config.set('copy.temp.files', files);
         grunt.task.run('copy:temp');
-
+        grunt.task.run('mp3-renumber');
 
         // build the C lookup matrix
         let code_LANGUAGES_MP3 = "int global_MP3_FOLDER[" + mp3Dirs.length + "][" + mp3Dirs[0].length + "] = " +
             String(JSON.stringify(mp3Dirs, null, 4)).replace(/\[/g, "{").replace(/\]/g, "}") + ";";
 
         // display generated code
-        console.log(code_LANGUAGES_DEFINES);
-        console.log(code_LANGUAGES_MP3);
-        console.log(code_GAME_MODES);
+
+        // save the generated code in the main template
+        let mainTemplate;
+        try {
+            let localFs = require('fs');
+            mainTemplate = localFs.readFileSync('src/main_template.ino', 'utf8');
+        } catch(e) {
+            console.error("Could not open src/main_template.ino!");
+            return;
+        }
+        // populate the template
+        try {
+            mainTemplate = mainTemplate.replace(/\[\[GAME_MODES\]\]/g, code_GAME_MODES);
+            mainTemplate = mainTemplate.replace(/\[\[MP3_FOLDER_ARRAY\]\]/g, code_LANGUAGES_MP3);
+            mainTemplate = mainTemplate.replace(/\[\[LANGUAGE_DEFINES\]\]/g, code_LANGUAGES_DEFINES);
+            mainTemplate = mainTemplate.replace(/\[\[LANGUAGE_CODES\]\]/g, code_LANGUAGES_CODES);
+        } catch(e) {
+            console.dir(e);
+        }
+        // save the template
+        try {
+            console.log("Making directory");
+            fs.mkdirSync('deploy/MilsimProp/');
+            console.log("saving template");
+            fs.writeFileSync('deploy/MilsimProp/MilsimProp.ino', mainTemplate);
+        } catch(e) {
+            console.error("ERROR: Could not save deploy/MilsimProp/MilsimProp.ino!");
+            console.dir(e);
+        }
     });
 
-
     // ===============================================================================================================//
+    grunt.registerTask('mp3-renumber', 'Renumbers the MP3 files in folders 01-15 within the deploy directory', function() {
+        const fs = require('fs');
+        // rename files in folders 01-15 to use 4 digit numbers instead of 3 digit numbers
+        let dirPath;
+        let first3;
+        ["01","02","03","04","05","06","07","08","09","10","11","12","13","14","15"].forEach((folderName) => {
+            dirPath = "deploy/SDcard/" + folderName;
+            try {
+                if (fs.lstatSync(dirPath).isDirectory()) {
+                    // process the directory
+                    fs.readdirSync(dirPath).forEach(file => {
+                        first3 = file.substring(0,3);
+                        if (first3 === String(parseInt(first3)).padStart(3, '0')) {
+                            console.log(dirPath + "/" + file);
+                            fs.rename(dirPath + "/" + file, dirPath + "/0" + file, (err) => {
+                                console.dir(err);
+                            });
+                        }
+                    });
+                }
+            } catch(e) {}
+        });
+    });
+
+        // ===============================================================================================================//
     grunt.registerTask('web-deps', 'Adds web dependencies into the deploy directory', function() {
         let funcRename = function(dest, src) {
             return dest + src.replace(".min.", ".");
@@ -272,19 +343,19 @@ module.exports = function(grunt) {
             files: [{
                 cwd: 'node_modules/jquery/dist/',
                 src: ['jquery.min.js'],
-                dest: 'deploy/Arduino/data/web/js/',
+                dest: 'deploy/MilsimProp/data/web/js/',
                 expand: true,
                 rename: funcRename
             }, {
                 cwd: 'node_modules/jquery-i18next/',
                 src: ['jquery-i18next.min.js'],
-                dest: 'deploy/Arduino/data/web/js/',
+                dest: 'deploy/MilsimProp/data/web/js/',
                 expand: true,
                 rename: funcRename
             }, {
                 cwd: 'node_modules/jquery-mobile/dist/',
                 src: ['jquery.mobile.min.js'],
-                dest: 'deploy/Arduino/data/web/js/',
+                dest: 'deploy/MilsimProp/data/web/js/',
                 expand: true,
                 rename: funcRename
             }, {
@@ -295,7 +366,7 @@ module.exports = function(grunt) {
                     'jquery.mobile.structure.min.css',
                     'jquery.mobile.theme.min.css'
                 ],
-                dest: 'deploy/Arduino/data/web/css/',
+                dest: 'deploy/MilsimProp/data/web/css/',
                 expand: true,
                 rename: funcRename
             }, {
@@ -306,7 +377,7 @@ module.exports = function(grunt) {
                     'handlebars.runtime.amd.min.js',
                     'handlebars.runtime.min.js'
                 ],
-                dest: 'deploy/Arduino/data/web/js/',
+                dest: 'deploy/MilsimProp/data/web/js/',
                 expand: true,
                 rename: funcRename
             }]
@@ -315,11 +386,6 @@ module.exports = function(grunt) {
         grunt.config.set('copy.webdeps', newFiles);
         grunt.task.run('copy:webdeps');
     });
-
-
-    // Load the plugins
-    // ===============================================================================================================//
-    grunt.loadNpmTasks('grunt-contrib-copy');
 
 
 };

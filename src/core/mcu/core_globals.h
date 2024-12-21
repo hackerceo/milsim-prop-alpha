@@ -1,0 +1,29 @@
+#include <DNSServer.h>
+#include "ESPAsyncWebServer.h"
+
+
+IPAddress apIP(172, 217, 28, 1);
+DNSServer dnsServer;
+AsyncWebServer webServer(80);
+
+
+#define GLOBAL_EVENT_RED_BUTTON_PRESS       100
+#define GLOBAL_EVENT_RED_BUTTON_RELEASE     101
+#define GLOBAL_EVENT_RED_KEY_ACTIVATE       102
+#define GLOBAL_EVENT_RED_KEY_DEACTIVATE     103
+#define GLOBAL_EVENT_BLUE_BUTTON_PRESS      104
+#define GLOBAL_EVENT_BLUE_BUTTON_RELEASE    105
+#define GLOBAL_EVENT_BLUE_KEY_ACTIVATE      106
+#define GLOBAL_EVENT_BLUE_KEY_DEACTIVATE    107
+#define GLOBAL_EVENT_BADGE_SCAN             110
+#define GLOBAL_EVENT_ACCEL_UNACTIVE         111
+#define GLOBAL_EVENT_ACCEL_ACTIVE           112
+#define GLOBAL_EVENT_ACCEL_FALL             113
+#define GLOBAL_EVENT_ACCEL_TAP              114
+#define GLOBAL_EVENT_ACCEL_DOUBLE_TAP       115
+
+
+
+
+
+
