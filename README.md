@@ -3,7 +3,7 @@
 ![Maintenance](https://img.shields.io/maintenance/yes/2023) 
 ![GitHub last commit](https://img.shields.io/github/last-commit/hackerceo/milsim-prop-alpha)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/hackerceo/milsim-prop-alpha1)
-![Lines of code](https://tokei.ekzhang.com/b1/github/hackerceo/milsim-prop-alpha1) 
+![Lines of code](https://raw.githubusercontent.com/hackerceo/milsim-prop-alpha1/image-data/loc-badge.svg)
 ![GitHub contributors](https://img.shields.io/github/contributors-anon/hackerceo/milsim-prop-alpha) 
 
 This project is an open-source game prop for military simulation games such as airsoft, paintball and others.  It is designed to run on the ESP-family of IoT devices created by Espressif Systems. It specifically targets the [ESP32](https://www.wikipedia.org/wiki/ESP32) and ESP32S modules which can be bought from a wide range of sources.  

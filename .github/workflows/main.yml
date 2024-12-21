@@ -13,10 +13,10 @@ jobs:
         uses: shadowmoose/GHA-LoC-Badge@1.0.0
         id: badge
         with:
-          debug: true
+          debug: false
           directory: ./
-          badge: ./output/badge.svg
-          ignore: 'node_modules/|README'
+          badge: ./output/loc-badge.svg
+          ignore: 'node_modules/|README|*.mp3|*.zip|hardware/'
 
       - name: Print the output
         run: |
