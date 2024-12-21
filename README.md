@@ -1,6 +1,6 @@
 # Milsim-Prop-Alpha1
 ![License](https://img.shields.io/github/license/hackerceo/milsim-prop-alpha) 
-![Maintenance](https://img.shields.io/maintenance/yes/2023) 
+![Maintenance](https://img.shields.io/maintenance/yes/2024) 
 ![GitHub last commit](https://img.shields.io/github/last-commit/hackerceo/milsim-prop-alpha)
 ![GitHub package.json version](https://img.shields.io/github/package-json/v/hackerceo/milsim-prop-alpha1)
 ![Lines of code](https://raw.githubusercontent.com/hackerceo/milsim-prop-alpha1/image-data/loc-badge.svg)
